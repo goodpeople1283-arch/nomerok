@@ -93,14 +93,15 @@
             justify-content: space-between;
             align-items: center;
         }
-        .btn-region-select {
+        .control-btn {
             background: #0d1117;
-            color: #fff;
+            color: #f39c12;
             border: 1px solid #30363d;
             padding: 6px 12px;
             border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
+            font-size: 13px;
         }
         .drop-card {
             width: 100%;
@@ -216,7 +217,6 @@
             padding: 8px;
             border: 1px dashed #30363d;
         }
-        /* Секции контента (Вкладки) */
         .content-section {
             display: none;
             width: 100%;
@@ -226,7 +226,6 @@
         .content-section.active {
             display: flex;
         }
-        /* Рынок стиль */
         .market-item {
             width: 100%;
             background: #161b22;
@@ -238,7 +237,6 @@
             justify-content: space-between;
             align-items: center;
         }
-        /* Нижняя навигация */
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -262,7 +260,6 @@
         .nav-item.active {
             color: #f39c12;
         }
-        /* Модальные окна */
         .modal {
             display: none;
             position: fixed;
@@ -375,14 +372,11 @@
             <div class="control-box">
                 <div class="control-row">
                     <span>📍 Тип региона:</span>
-                    <select id="regionTypeSelect" onchange="toggleRegionTypeUI()">
-                        <option value="random">Случайный (2 000 ₽)</option>
-                        <option value="custom">Выбранный (4 000 ₽)</option>
-                    </select>
+                    <button class="control-btn" id="regionTypeBtn" onclick="openRegionTypeModal()">Случайный (2 000 ₽)</button>
                 </div>
                 <div class="control-row" id="customRegionRow" style="display: none;">
                     <span>🇷🇺 Выбор региона:</span>
-                    <button class="btn-region-select" id="selectedRegionBtn" onclick="openRegionModal()">Москва (77)</button>
+                    <button class="control-btn" id="selectedRegionBtn" onclick="openRegionModal()">Москва (77)</button>
                 </div>
             </div>
 
@@ -440,13 +434,6 @@
                 </div>
                 <button style="width: auto; padding: 6px 12px; background: #2ecc71; color: #0d0f12; font-size: 12px;" onclick="alert('Ставка принята!')">Ставка</button>
             </div>
-            <div class="market-item">
-                <div>
-                    <div style="font-weight: bold; font-size: 13px; color: #2ecc71;">М 579 ОО 177</div>
-                    <div style="font-size: 11px; color: #8b949e;">Редкий • Toyota Camry</div>
-                </div>
-                <button style="width: auto; padding: 6px 12px; background: #2ecc71; color: #0d0f12; font-size: 12px;" onclick="alert('Ставка принята!')">Ставка</button>
-            </div>
         </div>
 
         <!-- ВКЛАДКА 4: ДРУЗЬЯ -->
@@ -474,7 +461,23 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА ВЫБОРА РЕГИОНОВ С ПОИСКОМ -->
+    <!-- МОДАЛКА ВЫБОРА ТИПА РЕГИОНА -->
+    <div class="modal" id="regionTypeModal">
+        <div class="modal-content">
+            <h2>📍 Тип региона</h2>
+            <div class="region-list-item" onclick="selectRegionType('random', 'Случайный (2 000 ₽)')">
+                <span>🎲 Случайный регион</span>
+                <b>2 000 ₽</b>
+            </div>
+            <div class="region-list-item" onclick="selectRegionType('custom', 'Выбранный (4 000 ₽)')">
+                <span>🎯 Выбранный регион</span>
+                <b>4 000 ₽</b>
+            </div>
+            <button class="btn-close" onclick="closeRegionTypeModal()">Закрыть</button>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА ВЫБОРА КОНКРЕТНОГО РЕГИОНА С ПОИСКОМ -->
     <div class="modal" id="regionModal">
         <div class="modal-content">
             <h2>🇷🇺 Выберите регион</h2>
@@ -509,6 +512,7 @@
 
         let balance = 104800000;
         let currentItem = null;
+        let selectedRegionType = "random";
         let selectedRegionCode = "77";
         let selectedRegionName = "Москва";
 
@@ -526,10 +530,9 @@
             { code: "54", name: "Новосибирская область", mult: 1.1 }
         ];
 
-        // Точные шансы и привязка моделей по твоему списку
         let rarities = [
             { name: "Обычный", chance: 40.02, color: "#95a5a6", min: 500, max: 2000, brands: ["Lada", "Renault", "Chevrolet", "Daewoo", "Dacia", "Škoda", "ЗАЗ", "УАЗ"], models: ["Granta", "Logan", "Nexia", "Matiz", "Duster", "Патриот"] },
             { name: "Необычный", chance: 25.0, color: "#3498db", min: 2000, max: 4000, brands: ["Kia", "Hyundai", "Škoda", "Nissan", "Ford", "Opel", "Peugeot"], models: ["Rio", "Solaris", "Octavia", "Qashqai", "Focus", "Astra"] },
             { name: "Редкий", chance: 15.0, color: "#2ecc71", min: 4000, max: 15000, brands: ["Toyota", "VW", "Mazda", "Honda", "Suzuki", "Mitsubishi"], models: ["Camry", "Passat", "CX-5", "Civic", "RAV4", "Outlander"] },
             { name: "Эпический", chance: 12.0, color: "#9b59b6", min: 4000, max: 40000, brands: ["BMW", "Mercedes", "Audi", "Lexus", "Volvo", "Cadillac", "Infiniti"], models: ["320i", "E300", "Q7", "RX", "XC90", "XT5"] },
-            
+            { name: "Легендарный", chance: 3.33, color: 
