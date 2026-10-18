@@ -21,7 +21,7 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding-bottom: 90px;
+            padding-bottom: 80px;
         }
         .app-container {
             width: 100%;
@@ -63,7 +63,7 @@
         }
         .tab-btn {
             flex: 1;
-            padding: 10px;
+            padding: 8px;
             text-align: center;
             font-size: 13px;
             font-weight: bold;
@@ -187,7 +187,7 @@
         }
         button {
             width: 100%;
-            padding: 15px;
+            padding: 14px;
             font-size: 15px;
             font-weight: bold;
             border: none;
@@ -246,7 +246,7 @@
             border-top: 1px solid #30363d;
             display: flex;
             justify-content: space-around;
-            padding: 10px 0;
+            padding: 8px 0;
             z-index: 1000;
         }
         .nav-item {
@@ -353,7 +353,6 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Верхняя плашка -->
         <div class="top-bar">
             <div class="user-lvl">⭐ Ур. 34</div>
             <div class="user-balance" id="balanceText">104,8 млн ₽</div>
@@ -363,18 +362,18 @@
         <div id="section-play" class="content-section active">
             <div class="tabs-header">
                 <button class="tab-btn active">Номера</button>
-                <button class="tab-btn" id="toCarsTabBtn">Машины</button>
-                <button class="tab-btn" id="toShopTabBtn">Магазин</button>
+                <button class="tab-btn" onclick="switchMainTab('cars')">Машины</button>
+                <button class="tab-btn" onclick="alert('Магазин контейнеров скоро открывается!')">Магазин</button>
             </div>
 
             <div class="control-box">
                 <div class="control-row">
                     <span>📍 Тип региона:</span>
-                    <button class="control-btn" id="regionTypeBtn">Случайный (2 000 ₽)</button>
+                    <button class="control-btn" onclick="openRegionTypeModal()">Случайный (2 000 ₽)</button>
                 </div>
                 <div class="control-row" id="customRegionRow" style="display: none;">
                     <span>🇷🇺 Выбор региона:</span>
-                    <button class="control-btn" id="selectedRegionBtn">Москва (77)</button>
+                    <button class="control-btn" onclick="openRegionModal()">Москва (77)</button>
                 </div>
             </div>
 
@@ -396,9 +395,9 @@
             </div>
 
             <div class="actions-box">
-                <button class="btn-spin" id="spinBtn">Открыть контейнер</button>
-                <button class="btn-sell" id="sellBtn" disabled>Продать предмет</button>
-                <button class="btn-admin" id="adminOpenBtn">⚙️ Панель администратора</button>
+                <button class="btn-spin" onclick="spinContainer()">Открыть контейнер</button>
+                <button class="btn-sell" id="sellBtn" onclick="sellItem()" disabled>Продать предмет</button>
+                <button class="btn-admin" onclick="requestAdminAccess()">⚙️ Панель администратора</button>
             </div>
         </div>
 
@@ -461,24 +460,24 @@
     <div class="modal" id="regionTypeModal">
         <div class="modal-content">
             <h2>📍 Тип региона</h2>
-            <div class="region-list-item" id="typeRandomBtn">
+            <div class="region-list-item" onclick="selectRegionType('random', 'Случайный (2 000 ₽)')">
                 <span>🎲 Случайный регион</span>
                 <b>2 000 ₽</b>
             </div>
-            <div class="region-list-item" id="typeCustomBtn">
+            <div class="region-list-item" onclick="selectRegionType('custom', 'Выбранный (4 000 ₽)')">
                 <span>🎯 Выбранный регион</span>
                 <b>4 000 ₽</b>
             </div>
-            <button class="btn-close" id="closeRegionTypeModalBtn">Закрыть</button>
+            <button class="btn-close" onclick="closeRegionTypeModal()">Закрыть</button>
         </div>
     </div>
 
     <div class="modal" id="regionModal">
         <div class="modal-content">
             <h2>🇷🇺 Выберите регион</h2>
-            <input type="text" class="search-input" id="regionSearchInput" placeholder="Поиск по коду или названию...">
+            <input type="text" class="search-input" id="regionSearchInput" placeholder="Поиск по коду или названию..." oninput="filterRegions()">
             <div id="regionsContainer" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px;"></div>
-            <button class="btn-close" id="closeRegionModalBtn">Закрыть</button>
+            <button class="btn-close" onclick="closeRegionModal()">Закрыть</button>
         </div>
     </div>
 
@@ -486,49 +485,48 @@
         <div class="modal-content">
             <h2>⚙️ Настройка шансов (%)</h2>
             <div id="adminInputsList"></div>
-            <button class="btn-spin" id="saveAdminBtn" style="background:#2ecc71; color:#0d0f12; padding: 12px;">Сохранить</button>
-            <button class="btn-close" id="closeAdminBtn">Закрыть</button>
+            <button class="btn-spin" onclick="saveAdminChances()" style="background:#2ecc71; color:#0d0f12; padding: 12px;">Сохранить</button>
+            <button class="btn-close" onclick="closeAdmin()">Закрыть</button>
         </div>
     </div>
 
     <!-- Нижняя навигация -->
     <div class="nav-bar">
-        <button class="nav-item active" data-sec="play">🏠<br>Играть</button>
-        <button class="nav-item" data-sec="cars">🚗<br>Гараж</button>
-        <button class="nav-item" data-sec="market">📈<br>Рынок</button>
-        <button class="nav-item" data-sec="friends">👥<br>Друзья</button>
-        <button class="nav-item" data-sec="more">⚙️<br>Ещё</button>
+        <button class="nav-item active" onclick="switchBottomNav('play', this)">🏠<br>Играть</button>
+        <button class="nav-item" onclick="switchBottomNav('cars', this)">🚗<br>Гараж</button>
+        <button class="nav-item" onclick="switchBottomNav('market', this)">📈<br>Рынок</button>
+        <button class="nav-item" onclick="switchBottomNav('friends', this)">👥<br>Друзья</button>
+        <button class="nav-item" onclick="switchBottomNav('more', this)">⚙️<br>Ещё</button>
     </div>
 
     <script>
-        window.addEventListener("DOMContentLoaded", () => {
-            const tg = window.Telegram.WebApp;
-            try { tg.expand(); } catch(e){}
+        const tg = window.Telegram.WebApp;
+        try { tg.expand(); } catch(e){}
 
-            let balance = 104800000;
-            let currentItem = null;
-            let selectedRegionType = "random";
-            let selectedRegionCode = "77";
-            let selectedRegionName = "Москва";
+        let balance = 104800000;
+        let currentItem = null;
+        let selectedRegionType = "random";
+        let selectedRegionCode = "77";
+        let selectedRegionName = "Москва";
 
-            const ADMIN_HASH = "8f3c421711204d80a184ef47e5b128549a1d2d3a3d5f2f5c789547ea63351d3b";
+        const ADMIN_HASH = "8f3c421711204d80a184ef47e5b128549a1d2d3a3d5f2f5c789547ea63351d3b";
 
-            const regionsData = [
-                { code: "77", name: "Москва", mult: 1.5 },
-                { code: "78", name: "Санкт-Петербург", mult: 1.3 },
-                { code: "50", name: "Московская область", mult: 1.2 },
-                { code: "23", name: "Краснодарский край", mult: 1.15 },
-                { code: "65", name: "Сахалинская область", mult: 1.0 },
-                { code: "39", name: "Калининградская область", mult: 1.0 },
-                { code: "16", name: "Республика Татарстан", mult: 1.1 },
-                { code: "66", name: "Свердловская область", mult: 1.1 },
-                { code: "54", name: "Новосибирская область", mult: 1.1 }
-            ];
+        const regionsData = [
+            { code: "77", name: "Москва", mult: 1.5 },
+            { code: "78", name: "Санкт-Петербург", mult: 1.3 },
+            { code: "50", name: "Московская область", mult: 1.2 },
+            { code: "23", name: "Краснодарский край", mult: 1.15 },
+            { code: "65", name: "Сахалинская область", mult: 1.0 },
+            { code: "39", name: "Калининградская область", mult: 1.0 },
+            { code: "16", name: "Республика Татарстан", mult: 1.1 },
+            { code: "66", name: "Свердловская область", mult: 1.1 },
+            { code: "54", name: "Новосибирская область", mult: 1.1 }
+        ];
 
-            let rarities = [
-                { name: "Обычный", chance: 40.02, color: "#95a5a6", min: 500, max: 2000, brands: ["Lada", "Renault", "Chevrolet", "Daewoo", "Dacia", "Škoda", "ЗАЗ", "УАЗ"], models: ["Granta", "Logan", "Nexia", "Matiz", "Duster", "Патриот"] },
-                { name: "Необычный", chance: 25.0, color: "#3498db", min: 2000, max: 4000, brands: ["Kia", "Hyundai", "Škoda", "Nissan", "Ford", "Opel", "Peugeot"], models: ["Rio", "Solaris", "Octavia", "Qashqai", "Focus", "Astra"] },
-                { name: "Редкий", chance: 15.0, color: "#2ecc71", min: 4000, max: 15000, brands: ["Toyota", "VW", "Mazda", "Honda", "Suzuki", "Mitsubishi"], models: ["Camry", "Passat", "CX-5", "Civic", "RAV4", "Outlander"] },
-                { name: "Эпический", chance: 12.0, color: "#9b59b6", min: 4000, max: 40000, brands: ["BMW", "Mercedes", "Audi", "Lexus", "Volvo", "Cadillac", "Infiniti"], models: ["320i", "E300", "Q7", "RX", "XC90", "XT5"] },
-                { name: "Легендарный", chance: 3.33, color: "#e67e22", min: 100000, max: 300000, brands: ["Porsche", "Tesla", "Genesis", "Jaguar", "Alfa Romeo", "Land Rover", "Jeep", "Ford"], models: ["911", "Model S", "G80", "F-Type", "Giulia", "Defender", "Mustang GT"] },
-                { name: "Мифический", chance: 2.5, color: "#e74c3c", min: 1000000, max: 10000000, brands: ["Ferrari", "Lamborghini", "McLaren", "Nissan", "Chevrolet", "Dodge", "Acura", "BMW"], models: ["48
+        let rarities = [
+            { name: "Обычный", chance: 40.02, color: "#95a5a6", min: 500, max: 2000, brands: ["Lada", "Renault", "Chevrolet", "Daewoo", "Dacia", "Škoda", "ЗАЗ", "УАЗ"], models: ["Granta", "Logan", "Nexia", "Matiz", "Duster", "Патриот"] },
+            { name: "Необычный", chance: 25.0, color: "#3498db", min: 2000, max: 4000, brands: ["Kia", "Hyundai", "Škoda", "Nissan", "Ford", "Opel", "Peugeot"], models: ["Rio", "Solaris", "Octavia", "Qashqai", "Focus", "Astra"] },
+            { name: "Редкий", chance: 15.0, color: "#2ecc71", min: 4000, max: 15000, brands: ["Toyota", "VW", "Mazda", "Honda", "Suzuki", "Mitsubishi"], models: ["Camry", "Passat", "CX-5", "Civic", "RAV4", "Outlander"] },
+            { name: "Эпический", chance: 12.0, color: "#9b59b6", min: 4000, max: 40000, brands: ["BMW", "Mercedes", "Audi", "Lexus", "Volvo", "Cadillac", "Infiniti"], models: ["320i", "E300", "Q7", "RX", "XC90", "XT5"] },
+            { name: "Легендарный", chance: 3.33, color: "#e67e22", min: 100000, max: 300000, brands: ["Porsche", "Tesla", "Genesis", "Jaguar", "Alfa Romeo", "Land Rover", "Jeep", "Ford"], models: ["911", "Model S", "G80", "F-Type", "Giulia", "Defender", "Mustang GT"] },
+            
