@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Номерок | Мини-приложение</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Номерок</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -12,6 +12,7 @@
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
         body {
             background-color: #0d0f12;
@@ -20,7 +21,7 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding-bottom: 80px;
+            padding-bottom: 90px;
         }
         .app-container {
             width: 100%;
@@ -62,7 +63,7 @@
         }
         .tab-btn {
             flex: 1;
-            padding: 8px;
+            padding: 10px;
             text-align: center;
             font-size: 13px;
             font-weight: bold;
@@ -186,16 +187,15 @@
         }
         button {
             width: 100%;
-            padding: 14px;
+            padding: 15px;
             font-size: 15px;
             font-weight: bold;
             border: none;
             border-radius: 12px;
             cursor: pointer;
-            transition: transform 0.1s;
         }
         button:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
         .btn-spin {
             background-color: #f39c12;
@@ -246,7 +246,7 @@
             border-top: 1px solid #30363d;
             display: flex;
             justify-content: space-around;
-            padding: 8px 0;
+            padding: 10px 0;
             z-index: 1000;
         }
         .nav-item {
@@ -256,6 +256,7 @@
             background: none;
             border: none;
             cursor: pointer;
+            padding: 5px;
         }
         .nav-item.active {
             color: #f39c12;
@@ -422,14 +423,14 @@
                     <div style="font-weight: bold; font-size: 13px; color: #f1c40f;">Х 777 ХХ 777</div>
                     <div style="font-size: 11px; color: #8b949e;">Невозможный • Ferrari 250 GTO</div>
                 </div>
-                <button style="width: auto; padding: 6px 12px; background: #2ecc71; color: #0d0f12; font-size: 12px;" onclick="alert('Ставка принята!')">Ставка</button>
+                <button style="width: auto; padding: 8px 14px; background: #2ecc71; color: #0d0f12; font-size: 12px;" onclick="alert('Ставка принята!')">Ставка</button>
             </div>
             <div class="market-item">
                 <div>
                     <div style="font-weight: bold; font-size: 13px; color: #e67e22;">А 001 АА 77</div>
                     <div style="font-size: 11px; color: #8b949e;">Легендарный • Porsche 911</div>
                 </div>
-                <button style="width: auto; padding: 6px 12px; background: #2ecc71; color: #0d0f12; font-size: 12px;" onclick="alert('Ставка принята!')">Ставка</button>
+                <button style="width: auto; padding: 8px 14px; background: #2ecc71; color: #0d0f12; font-size: 12px;" onclick="alert('Ставка принята!')">Ставка</button>
             </div>
         </div>
 
@@ -438,7 +439,7 @@
             <h2 style="color: #f39c12; margin-bottom: 10px; font-size: 18px;">👥 Приглашай друзей</h2>
             <div class="menu-card" style="text-align: center;">
                 <p style="font-size: 13px; margin-bottom: 8px;">Зови друзей — получай доп. попытки и % от их продаж!</p>
-                <button style="background: #3498db; color: #fff; padding: 10px;" onclick="alert('Ссылка скопирована в буфер обмена!')">Поделиться ссылкой</button>
+                <button style="background: #3498db; color: #fff; padding: 12px;" onclick="alert('Ссылка скопирована!')">Поделиться ссылкой</button>
             </div>
         </div>
 
@@ -500,9 +501,9 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        window.addEventListener("DOMContentLoaded", () => {
             const tg = window.Telegram.WebApp;
-            tg.expand();
+            try { tg.expand(); } catch(e){}
 
             let balance = 104800000;
             let currentItem = null;
@@ -530,4 +531,4 @@
                 { name: "Редкий", chance: 15.0, color: "#2ecc71", min: 4000, max: 15000, brands: ["Toyota", "VW", "Mazda", "Honda", "Suzuki", "Mitsubishi"], models: ["Camry", "Passat", "CX-5", "Civic", "RAV4", "Outlander"] },
                 { name: "Эпический", chance: 12.0, color: "#9b59b6", min: 4000, max: 40000, brands: ["BMW", "Mercedes", "Audi", "Lexus", "Volvo", "Cadillac", "Infiniti"], models: ["320i", "E300", "Q7", "RX", "XC90", "XT5"] },
                 { name: "Легендарный", chance: 3.33, color: "#e67e22", min: 100000, max: 300000, brands: ["Porsche", "Tesla", "Genesis", "Jaguar", "Alfa Romeo", "Land Rover", "Jeep", "Ford"], models: ["911", "Model S", "G80", "F-Type", "Giulia", "Defender", "Mustang GT"] },
-                { name: "Мифический", chance: 2.5, color: "#e74c3c", min: 1000000, max: 10000000, brands: ["Ferrari", "Lamborghini", "McLaren", "Nissan", "Chevrolet", "Dodge", "Acura", "BMW"], models: ["488", "Huracán", "720S", "GT-R Nismo", "Co
+                { name: "Мифический", chance: 2.5, color: "#e74c3c", min: 1000000, max: 10000000, brands: ["Ferrari", "Lamborghini", "McLaren", "Nissan", "Chevrolet", "Dodge", "Acura", "BMW"], models: ["48
