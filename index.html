@@ -20,7 +20,7 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding-bottom: 75px;
+            padding-bottom: 80px;
         }
         .app-container {
             width: 100%;
@@ -37,7 +37,7 @@
             align-items: center;
             margin-bottom: 12px;
             background: #161b22;
-            padding: 8px 12px;
+            padding: 10px 14px;
             border-radius: 12px;
             border: 1px solid #30363d;
         }
@@ -81,11 +81,11 @@
             background: #161b22;
             border: 1px solid #30363d;
             border-radius: 10px;
-            padding: 10px 12px;
-            margin-bottom: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
             font-size: 13px;
         }
         .control-row {
@@ -97,8 +97,8 @@
             background: #0d1117;
             color: #f39c12;
             border: 1px solid #30363d;
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 8px 14px;
+            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
             font-size: 13px;
@@ -171,7 +171,7 @@
             width: 100%;
             background: #0d0f17;
             border-radius: 8px;
-            padding: 8px 12px;
+            padding: 10px 12px;
             font-size: 11px;
             color: #8b949e;
             margin-top: 6px;
@@ -182,7 +182,7 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
         button {
             width: 100%;
@@ -214,7 +214,7 @@
             background-color: #21262d;
             color: #8b949e;
             font-size: 11px;
-            padding: 8px;
+            padding: 10px;
             border: 1px dashed #30363d;
         }
         .content-section {
@@ -231,7 +231,7 @@
             background: #161b22;
             border: 1px solid #30363d;
             border-radius: 10px;
-            padding: 10px 12px;
+            padding: 12px;
             margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
@@ -247,7 +247,7 @@
             display: flex;
             justify-content: space-around;
             padding: 8px 0;
-            z-index: 50;
+            z-index: 1000;
         }
         .nav-item {
             font-size: 11px;
@@ -265,7 +265,7 @@
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85);
-            z-index: 100;
+            z-index: 2000;
             justify-content: center;
             align-items: center;
             padding: 15px;
@@ -294,13 +294,13 @@
             background: #0d1117;
             border: 1px solid #30363d;
             color: #fff;
-            padding: 8px 12px;
+            padding: 10px;
             border-radius: 8px;
             font-size: 13px;
             margin-bottom: 8px;
         }
         .region-list-item {
-            padding: 10px;
+            padding: 12px;
             background: #21262d;
             border-radius: 8px;
             margin-bottom: 6px;
@@ -309,16 +309,13 @@
             justify-content: space-between;
             font-size: 13px;
         }
-        .region-list-item:hover {
-            background: #30363d;
-        }
         .admin-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 12px;
             background: #21262d;
-            padding: 6px 10px;
+            padding: 8px 10px;
             border-radius: 6px;
         }
         .admin-row input {
@@ -326,7 +323,7 @@
             background: #0d1117;
             border: 1px solid #484f58;
             color: #fff;
-            padding: 4px;
+            padding: 6px;
             border-radius: 4px;
             text-align: center;
             font-weight: bold;
@@ -334,7 +331,7 @@
         .btn-close {
             background-color: #e74c3c;
             color: #fff;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             border: none;
             font-weight: bold;
@@ -365,18 +362,18 @@
         <div id="section-play" class="content-section active">
             <div class="tabs-header">
                 <button class="tab-btn active">Номера</button>
-                <button class="tab-btn" onclick="switchMainTab('cars')">Машины</button>
-                <button class="tab-btn" onclick="switchMainTab('shop')">Магазин</button>
+                <button class="tab-btn" id="toCarsTabBtn">Машины</button>
+                <button class="tab-btn" id="toShopTabBtn">Магазин</button>
             </div>
 
             <div class="control-box">
                 <div class="control-row">
                     <span>📍 Тип региона:</span>
-                    <button class="control-btn" id="regionTypeBtn" onclick="openRegionTypeModal()">Случайный (2 000 ₽)</button>
+                    <button class="control-btn" id="regionTypeBtn">Случайный (2 000 ₽)</button>
                 </div>
                 <div class="control-row" id="customRegionRow" style="display: none;">
                     <span>🇷🇺 Выбор региона:</span>
-                    <button class="control-btn" id="selectedRegionBtn" onclick="openRegionModal()">Москва (77)</button>
+                    <button class="control-btn" id="selectedRegionBtn">Москва (77)</button>
                 </div>
             </div>
 
@@ -398,13 +395,13 @@
             </div>
 
             <div class="actions-box">
-                <button class="btn-spin" id="spinBtn" onclick="spinContainer()">Открыть контейнер</button>
-                <button class="btn-sell" id="sellBtn" onclick="sellItem()" disabled>Продать предмет</button>
-                <button class="btn-admin" onclick="requestAdminAccess()">⚙️ Панель администратора</button>
+                <button class="btn-spin" id="spinBtn">Открыть контейнер</button>
+                <button class="btn-sell" id="sellBtn" disabled>Продать предмет</button>
+                <button class="btn-admin" id="adminOpenBtn">⚙️ Панель администратора</button>
             </div>
         </div>
 
-        <!-- ВКЛАДКА 2: ГАРАЖ / МАШИНЫ -->
+        <!-- ВКЛАДКА 2: ГАРАЖ -->
         <div id="section-cars" class="content-section">
             <h2 style="color: #f39c12; margin-bottom: 10px; font-size: 18px;">🚗 Ваш Автопарк</h2>
             <div class="menu-card">
@@ -445,15 +442,13 @@
             </div>
         </div>
 
-        <!-- ВКЛАДКА 5: ЕЩЁ (СКУПЩИК) -->
+        <!-- ВКЛАДКА 5: ЕЩЁ -->
         <div id="section-more" class="content-section">
             <h2 style="color: #f39c12; margin-bottom: 10px; font-size: 18px;">⚙️ Дополнительно</h2>
-            
             <div class="menu-card" id="buyerCard" style="border: 2px dashed #e74c3c;">
                 <div style="font-weight: bold; color: #e74c3c; font-size: 14px;">🕵️‍♂️ Черный Скупщик номеров</div>
                 <div id="buyerStatusText" style="font-size: 12px; color: #8b949e; margin-top: 4px;">Скупщик спит. Расписание по МСК: 17:00, 20:00, 22:00 (на 30 минут). Скупает номера на буквы С, М, В, А, Е с шансом 1% в 10 раз дороже!</div>
             </div>
-
             <div class="menu-card">
                 <div style="font-weight: bold; font-size: 13px;">📊 Статистика игрока</div>
                 <div style="font-size: 12px; color: #8b949e;">Открыто контейнеров: 42<br>Успешных продаж: 38</div>
@@ -461,78 +456,78 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА ВЫБОРА ТИПА РЕГИОНА -->
+    <!-- МОДАЛКИ -->
     <div class="modal" id="regionTypeModal">
         <div class="modal-content">
             <h2>📍 Тип региона</h2>
-            <div class="region-list-item" onclick="selectRegionType('random', 'Случайный (2 000 ₽)')">
+            <div class="region-list-item" id="typeRandomBtn">
                 <span>🎲 Случайный регион</span>
                 <b>2 000 ₽</b>
             </div>
-            <div class="region-list-item" onclick="selectRegionType('custom', 'Выбранный (4 000 ₽)')">
+            <div class="region-list-item" id="typeCustomBtn">
                 <span>🎯 Выбранный регион</span>
                 <b>4 000 ₽</b>
             </div>
-            <button class="btn-close" onclick="closeRegionTypeModal()">Закрыть</button>
+            <button class="btn-close" id="closeRegionTypeModalBtn">Закрыть</button>
         </div>
     </div>
 
-    <!-- МОДАЛКА ВЫБОРА КОНКРЕТНОГО РЕГИОНА С ПОИСКОМ -->
     <div class="modal" id="regionModal">
         <div class="modal-content">
             <h2>🇷🇺 Выберите регион</h2>
-            <input type="text" class="search-input" id="regionSearchInput" placeholder="Поиск по коду или названию..." oninput="filterRegions()">
+            <input type="text" class="search-input" id="regionSearchInput" placeholder="Поиск по коду или названию...">
             <div id="regionsContainer" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px;"></div>
-            <button class="btn-close" onclick="closeRegionModal()">Закрыть</button>
+            <button class="btn-close" id="closeRegionModalBtn">Закрыть</button>
         </div>
     </div>
 
-    <!-- МОДАЛКА АДМИНКИ -->
     <div class="modal" id="adminModal">
         <div class="modal-content">
             <h2>⚙️ Настройка шансов (%)</h2>
             <div id="adminInputsList"></div>
-            <button class="btn-spin" onclick="saveAdminChances()" style="background:#2ecc71; color:#0d0f12; padding: 10px;">Сохранить</button>
-            <button class="btn-close" onclick="closeAdmin()">Закрыть</button>
+            <button class="btn-spin" id="saveAdminBtn" style="background:#2ecc71; color:#0d0f12; padding: 12px;">Сохранить</button>
+            <button class="btn-close" id="closeAdminBtn">Закрыть</button>
         </div>
     </div>
 
     <!-- Нижняя навигация -->
     <div class="nav-bar">
-        <button class="nav-item active" onclick="switchBottomNav('play', this)">🏠<br>Играть</button>
-        <button class="nav-item" onclick="switchBottomNav('cars', this)">🚗<br>Гараж</button>
-        <button class="nav-item" onclick="switchBottomNav('market', this)">📈<br>Рынок</button>
-        <button class="nav-item" onclick="switchBottomNav('friends', this)">👥<br>Друзья</button>
-        <button class="nav-item" onclick="switchBottomNav('more', this)">⚙️<br>Ещё</button>
+        <button class="nav-item active" data-sec="play">🏠<br>Играть</button>
+        <button class="nav-item" data-sec="cars">🚗<br>Гараж</button>
+        <button class="nav-item" data-sec="market">📈<br>Рынок</button>
+        <button class="nav-item" data-sec="friends">👥<br>Друзья</button>
+        <button class="nav-item" data-sec="more">⚙️<br>Ещё</button>
     </div>
 
     <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
+        document.addEventListener("DOMContentLoaded", () => {
+            const tg = window.Telegram.WebApp;
+            tg.expand();
 
-        let balance = 104800000;
-        let currentItem = null;
-        let selectedRegionType = "random";
-        let selectedRegionCode = "77";
-        let selectedRegionName = "Москва";
+            let balance = 104800000;
+            let currentItem = null;
+            let selectedRegionType = "random";
+            let selectedRegionCode = "77";
+            let selectedRegionName = "Москва";
 
-        const ADMIN_HASH = "8f3c421711204d80a184ef47e5b128549a1d2d3a3d5f2f5c789547ea63351d3b";
+            const ADMIN_HASH = "8f3c421711204d80a184ef47e5b128549a1d2d3a3d5f2f5c789547ea63351d3b";
 
-        const regionsData = [
-            { code: "77", name: "Москва", mult: 1.5 },
-            { code: "78", name: "Санкт-Петербург", mult: 1.3 },
-            { code: "50", name: "Московская область", mult: 1.2 },
-            { code: "23", name: "Краснодарский край", mult: 1.15 },
-            { code: "65", name: "Сахалинская область", mult: 1.0 },
-            { code: "39", name: "Калининградская область", mult: 1.0 },
-            { code: "16", name: "Республика Татарстан", mult: 1.1 },
-            { code: "66", name: "Свердловская область", mult: 1.1 },
-            { code: "54", name: "Новосибирская область", mult: 1.1 }
-        ];
+            const regionsData = [
+                { code: "77", name: "Москва", mult: 1.5 },
+                { code: "78", name: "Санкт-Петербург", mult: 1.3 },
+                { code: "50", name: "Московская область", mult: 1.2 },
+                { code: "23", name: "Краснодарский край", mult: 1.15 },
+                { code: "65", name: "Сахалинская область", mult: 1.0 },
+                { code: "39", name: "Калининградская область", mult: 1.0 },
+                { code: "16", name: "Республика Татарстан", mult: 1.1 },
+                { code: "66", name: "Свердловская область", mult: 1.1 },
+                { code: "54", name: "Новосибирская область", mult: 1.1 }
+            ];
 
-        let rarities = [
-            { name: "Обычный", chance: 40.02, color: "#95a5a6", min: 500, max: 2000, brands: ["Lada", "Renault", "Chevrolet", "Daewoo", "Dacia", "Škoda", "ЗАЗ", "УАЗ"], models: ["Granta", "Logan", "Nexia", "Matiz", "Duster", "Патриот"] },
-            { name: "Необычный", chance: 25.0, color: "#3498db", min: 2000, max: 4000, brands: ["Kia", "Hyundai", "Škoda", "Nissan", "Ford", "Opel", "Peugeot"], models: ["Rio", "Solaris", "Octavia", "Qashqai", "Focus", "Astra"] },
-            { name: "Редкий", chance: 15.0, color: "#2ecc71", min: 4000, max: 15000, brands: ["Toyota", "VW", "Mazda", "Honda", "Suzuki", "Mitsubishi"], models: ["Camry", "Passat", "CX-5", "Civic", "RAV4", "Outlander"] },
-            { name: "Эпический", chance: 12.0, color: "#9b59b6", min: 4000, max: 40000, brands: ["BMW", "Mercedes", "Audi", "Lexus", "Volvo", "Cadillac", "Infiniti"], models: ["320i", "E300", "Q7", "RX", "XC90", "XT5"] },
-            { name: "Легендарный", chance: 3.33, color: 
+            let rarities = [
+                { name: "Обычный", chance: 40.02, color: "#95a5a6", min: 500, max: 2000, brands: ["Lada", "Renault", "Chevrolet", "Daewoo", "Dacia", "Škoda", "ЗАЗ", "УАЗ"], models: ["Granta", "Logan", "Nexia", "Matiz", "Duster", "Патриот"] },
+                { name: "Необычный", chance: 25.0, color: "#3498db", min: 2000, max: 4000, brands: ["Kia", "Hyundai", "Škoda", "Nissan", "Ford", "Opel", "Peugeot"], models: ["Rio", "Solaris", "Octavia", "Qashqai", "Focus", "Astra"] },
+                { name: "Редкий", chance: 15.0, color: "#2ecc71", min: 4000, max: 15000, brands: ["Toyota", "VW", "Mazda", "Honda", "Suzuki", "Mitsubishi"], models: ["Camry", "Passat", "CX-5", "Civic", "RAV4", "Outlander"] },
+                { name: "Эпический", chance: 12.0, color: "#9b59b6", min: 4000, max: 40000, brands: ["BMW", "Mercedes", "Audi", "Lexus", "Volvo", "Cadillac", "Infiniti"], models: ["320i", "E300", "Q7", "RX", "XC90", "XT5"] },
+                { name: "Легендарный", chance: 3.33, color: "#e67e22", min: 100000, max: 300000, brands: ["Porsche", "Tesla", "Genesis", "Jaguar", "Alfa Romeo", "Land Rover", "Jeep", "Ford"], models: ["911", "Model S", "G80", "F-Type", "Giulia", "Defender", "Mustang GT"] },
+                { name: "Мифический", chance: 2.5, color: "#e74c3c", min: 1000000, max: 10000000, brands: ["Ferrari", "Lamborghini", "McLaren", "Nissan", "Chevrolet", "Dodge", "Acura", "BMW"], models: ["488", "Huracán", "720S", "GT-R Nismo", "Co
