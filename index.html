@@ -11,8 +11,7 @@
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
         }
         body {
             background-color: #0d0f12;
@@ -21,7 +20,7 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding-bottom: 80px;
+            padding-bottom: 90px;
         }
         .app-container {
             width: 100%;
@@ -38,7 +37,7 @@
             align-items: center;
             margin-bottom: 12px;
             background: #161b22;
-            padding: 10px 14px;
+            padding: 12px 16px;
             border-radius: 12px;
             border: 1px solid #30363d;
         }
@@ -57,13 +56,13 @@
             width: 100%;
             background: #161b22;
             border-radius: 10px;
-            padding: 3px;
-            margin-bottom: 10px;
+            padding: 4px;
+            margin-bottom: 12px;
             border: 1px solid #30363d;
         }
         .tab-btn {
             flex: 1;
-            padding: 8px;
+            padding: 10px;
             text-align: center;
             font-size: 13px;
             font-weight: bold;
@@ -81,8 +80,8 @@
             width: 100%;
             background: #161b22;
             border: 1px solid #30363d;
-            border-radius: 10px;
-            padding: 12px;
+            border-radius: 12px;
+            padding: 14px;
             margin-bottom: 12px;
             display: flex;
             flex-direction: column;
@@ -98,11 +97,14 @@
             background: #0d1117;
             color: #f39c12;
             border: 1px solid #30363d;
-            padding: 8px 14px;
+            padding: 10px 16px;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
             font-size: 13px;
+        }
+        .control-btn:active {
+            background: #21262d;
         }
         .drop-card {
             width: 100%;
@@ -187,15 +189,17 @@
         }
         button {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             font-size: 15px;
             font-weight: bold;
             border: none;
             border-radius: 12px;
             cursor: pointer;
+            touch-action: manipulation;
         }
         button:active {
-            transform: scale(0.97);
+            transform: scale(0.96);
+            opacity: 0.9;
         }
         .btn-spin {
             background-color: #f39c12;
@@ -207,14 +211,16 @@
         }
         .btn-sell:disabled {
             background-color: #1a2e22;
-            color: #444;
+            color: #555;
             cursor: not-allowed;
+            transform: none;
+            opacity: 1;
         }
         .btn-admin {
             background-color: #21262d;
             color: #8b949e;
             font-size: 11px;
-            padding: 10px;
+            padding: 12px;
             border: 1px dashed #30363d;
         }
         .content-section {
@@ -246,7 +252,7 @@
             border-top: 1px solid #30363d;
             display: flex;
             justify-content: space-around;
-            padding: 8px 0;
+            padding: 10px 0;
             z-index: 1000;
         }
         .nav-item {
@@ -256,7 +262,8 @@
             background: none;
             border: none;
             cursor: pointer;
-            padding: 5px;
+            padding: 6px;
+            touch-action: manipulation;
         }
         .nav-item.active {
             color: #f39c12;
@@ -295,13 +302,14 @@
             background: #0d1117;
             border: 1px solid #30363d;
             color: #fff;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
-            font-size: 13px;
+            font-size: 14px;
             margin-bottom: 8px;
+            outline: none;
         }
         .region-list-item {
-            padding: 12px;
+            padding: 14px;
             background: #21262d;
             border-radius: 8px;
             margin-bottom: 6px;
@@ -309,6 +317,9 @@
             display: flex;
             justify-content: space-between;
             font-size: 13px;
+        }
+        .region-list-item:active {
+            background: #30363d;
         }
         .admin-row {
             display: flex;
@@ -332,7 +343,7 @@
         .btn-close {
             background-color: #e74c3c;
             color: #fff;
-            padding: 12px;
+            padding: 14px;
             border-radius: 8px;
             border: none;
             font-weight: bold;
@@ -373,7 +384,7 @@
                 </div>
                 <div class="control-row" id="customRegionRow" style="display: none;">
                     <span>🇷🇺 Выбор региона:</span>
-                    <button class="control-btn" onclick="openRegionModal()">Москва (77)</button>
+                    <button class="control-btn" id="selectedRegionBtn" onclick="openRegionModal()">Москва (77)</button>
                 </div>
             </div>
 
@@ -485,7 +496,7 @@
         <div class="modal-content">
             <h2>⚙️ Настройка шансов (%)</h2>
             <div id="adminInputsList"></div>
-            <button class="btn-spin" onclick="saveAdminChances()" style="background:#2ecc71; color:#0d0f12; padding: 12px;">Сохранить</button>
+            <button class="btn-spin" onclick="saveAdminChances()" style="background:#2ecc71; color:#0d0f12; padding: 14px;">Сохранить</button>
             <button class="btn-close" onclick="closeAdmin()">Закрыть</button>
         </div>
     </div>
@@ -500,8 +511,8 @@
     </div>
 
     <script>
-        const tg = window.Telegram.WebApp;
-        try { tg.expand(); } catch(e){}
+        const tg = window.Telegram?.WebApp;
+        try { tg?.expand(); } catch(e){}
 
         let balance = 104800000;
         let currentItem = null;
@@ -509,7 +520,7 @@
         let selectedRegionCode = "77";
         let selectedRegionName = "Москва";
 
-        const ADMIN_HASH = "8f3c421711204d80a184ef47e5b128549a1d2d3a3d5f2f5c789547ea63351d3b";
+        const ADMIN_PASS = "Nomerok_Admin_998877!";
 
         const regionsData = [
             { code: "77", name: "Москва", mult: 1.5 },
@@ -528,5 +539,4 @@
             { name: "Необычный", chance: 25.0, color: "#3498db", min: 2000, max: 4000, brands: ["Kia", "Hyundai", "Škoda", "Nissan", "Ford", "Opel", "Peugeot"], models: ["Rio", "Solaris", "Octavia", "Qashqai", "Focus", "Astra"] },
             { name: "Редкий", chance: 15.0, color: "#2ecc71", min: 4000, max: 15000, brands: ["Toyota", "VW", "Mazda", "Honda", "Suzuki", "Mitsubishi"], models: ["Camry", "Passat", "CX-5", "Civic", "RAV4", "Outlander"] },
             { name: "Эпический", chance: 12.0, color: "#9b59b6", min: 4000, max: 40000, brands: ["BMW", "Mercedes", "Audi", "Lexus", "Volvo", "Cadillac", "Infiniti"], models: ["320i", "E300", "Q7", "RX", "XC90", "XT5"] },
-            { name: "Легендарный", chance: 3.33, color: "#e67e22", min: 100000, max: 300000, brands: ["Porsche", "Tesla", "Genesis", "Jaguar", "Alfa Romeo", "Land Rover", "Jeep", "Ford"], models: ["911", "Model S", "G80", "F-Type", "Giulia", "Defender", "Mustang GT"] },
-            
+       
